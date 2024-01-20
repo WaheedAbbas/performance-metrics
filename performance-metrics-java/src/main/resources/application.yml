@@ -8,3 +8,6 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: ${JPA_DDL}
+api:
+  endpoint:
+    base-url: /api/v1

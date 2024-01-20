@@ -12,11 +12,11 @@ public class MetricValue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Integer id;
+    private Integer id;
     @Column(nullable = false)
-    Double value;
+    private Double value;
     @Column(nullable = false)
-    LocalDateTime created_at;
+    private LocalDateTime created_at;
     @ManyToOne
     @JoinColumn(name = "metric_id", nullable = false)
     private Metric metric;

@@ -13,9 +13,11 @@ public class Metric {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Integer id;
+    private Integer id;
     @Column(nullable = false)
-    String name;
+    private String name;
     @Column(nullable = false)
-    LocalDateTime created_at;
+    private LocalDateTime created_at;
+    @OneToMany(mappedBy = "metric", cascade = CascadeType.ALL)
+    private List<MetricValue> metricValues = new ArrayList<>();
 }

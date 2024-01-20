@@ -13,5 +13,5 @@ An application to monitor performance metrics.
   - MySQL
 - Android
   - Kotlin
-  - XML  
-  
+  - XML
+
