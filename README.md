@@ -14,4 +14,10 @@ An application to monitor performance metrics.
 - Android
   - Kotlin
   - XML
+## Run
+- Backend
+   - Clone and open `performance-metrics-java` 
+   - Create `MySQL` database
+   - Setup `application.yml` environment variables
+   
 
