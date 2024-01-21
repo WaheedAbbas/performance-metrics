@@ -2,6 +2,7 @@ package com.metrics.performancemetrics.exception;
 
 import com.metrics.performancemetrics.util.Result;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,5 +28,15 @@ public class ExceptionHandlerAdvice {
             map.put(key, val);
         });
         return new Result(false, HttpStatus.BAD_REQUEST.value(), "Provided arguments are invalid, see data for details.", map);
+    }
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    Result handleMetricIdNotFound(MetricNotFoundException metricNotFoundException){
+        return new Result(false, HttpStatus.NOT_FOUND.value(), metricNotFoundException.getMessage(), null);
+    }
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    Result handleHttpMessageNotWritableException(HttpMessageNotWritableException httpMessageNotWritableException){
+        return new Result(false, HttpStatus.INTERNAL_SERVER_ERROR.value(), httpMessageNotWritableException.getMessage(), null);
     }
 }

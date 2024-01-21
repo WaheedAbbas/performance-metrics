@@ -3,6 +3,7 @@ package com.metrics.performancemetrics.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class Metric {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
-    private LocalDateTime created_at;
+    private Instant created_at;
     @OneToMany(mappedBy = "metric", cascade = CascadeType.ALL)
     private List<MetricValue> metricValues = new ArrayList<>();
 }

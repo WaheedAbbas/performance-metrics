@@ -1,9 +1,11 @@
 package com.metrics.performancemetrics.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity(name = "metric_value")
@@ -16,8 +18,9 @@ public class MetricValue {
     @Column(nullable = false)
     private Double value;
     @Column(nullable = false)
-    private LocalDateTime created_at;
+    private Instant created_at;
     @ManyToOne
     @JoinColumn(name = "metric_id", nullable = false)
+    @JsonIgnore
     private Metric metric;
 }

@@ -15,6 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +33,6 @@ class MetricServiceTest {
     MetricRepository metricRepository;
     @InjectMocks
     MetricService metricService;
-
     List<Metric> mockMetrics = new ArrayList<>();
     @BeforeEach
     void setUp() {
@@ -39,22 +40,24 @@ class MetricServiceTest {
         Metric remoteEmployees = new Metric();
         remoteEmployees.setId(1);
         remoteEmployees.setName("Remote Employees");
-        remoteEmployees.setCreated_at(LocalDateTime.now());
+        remoteEmployees.setCreated_at(Instant.now());
+
         Metric onSiteEmployees = new Metric();
         onSiteEmployees.setId(2);
         onSiteEmployees.setName("Onsite Employees");
-        onSiteEmployees.setCreated_at(LocalDateTime.now());
+        onSiteEmployees.setCreated_at(Instant.now());
+
         mockMetrics.add(remoteEmployees);
         mockMetrics.add(onSiteEmployees);
     }
     @Test
-    void testAddNewMetricSuccess() {
+    void addNewMetric_ShouldReturnSuccess() {
 
         //Given
         Metric remoteEmployees = new Metric();
         remoteEmployees.setId(1);
         remoteEmployees.setName("Remote Employees");
-        remoteEmployees.setCreated_at(LocalDateTime.now());
+        remoteEmployees.setCreated_at(Instant.now());
 
         //When
         when(metricRepository.save(any(Metric.class))).thenReturn(remoteEmployees);
