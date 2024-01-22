@@ -10,8 +10,7 @@
     app:cardBackgroundColor="@color/cardview_dark_background"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <TextView
@@ -21,9 +20,20 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:textColor="@color/white"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/add_new_metric_value_btn"
         tools:text="Metric Name"
         />
+        <ImageButton
+            android:id="@+id/add_new_metric_value_btn"
+            android:layout_alignParentEnd="true"
+            android:background="@null"
+            android:src="@android:drawable/ic_menu_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     <LinearLayout
+        android:layout_below="@+id/metric_name_txt"
         android:weightSum="3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -56,6 +66,6 @@
             app:label="day"
             />
     </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

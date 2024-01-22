@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_bg"
+    android:gravity="center"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Metric Name"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@android:color/white"
+        android:textSize="25sp"/>
+
+    <EditText
+        android:id="@+id/new_metric_name_edt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@null"
+        android:hint="e.g Sales"
+        android:fontFamily="sans-serif-light"
+        android:inputType="textPersonName"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColorHint="#9B9B9B"
+        android:textColor="@color/white"
+        />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_new_metric_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:text="@string/add"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:enabled="true"
+        android:alpha="0.6"
+        app:backgroundTint="@color/teal_200"
+        app:cornerRadius="5dp" />
+
+</LinearLayout>

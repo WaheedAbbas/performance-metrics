@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Performance Metrics</string>
+    <string name="add_new_metric">Add New Metric</string>
+    <string name="add">Add</string>
 </resources>
