@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Performancemetricsandroid"
         android:usesCleartextTraffic="true"
+        android:name=".MyApplication"
         tools:targetApi="31">
         <activity
             android:name=".view.HomeActivity"

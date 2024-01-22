@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.metrics.performancemetrics.AppContainer
+import com.metrics.performancemetrics.MyApplication
 import com.metrics.performancemetrics.average.AverageCalculator
 import com.metrics.performancemetrics.R
 import com.metrics.performancemetrics.data.Metric
@@ -27,17 +29,18 @@ class HomeActivity : AppCompatActivity() {
     private var homeSwipeRefreshLayout : SwipeRefreshLayout? = null
     private var addNewMetricFAB : FloatingActionButton? = null
     private var metricsListRecyclerAdapter : MetricsListRecyclerAdapter? = null
-    private val averageCalculator : AverageCalculator = AverageCalculator()
     private var metricsRecyclerView : RecyclerView? = null
     private var apiErrorMessage : TextView? = null
     private var loadingProgressBar : ProgressBar? = null
     private var newMetricInputDialog : NewMetricInputDialog? = null
     private var newMetricValueDialog : NewMetricValueInputDialog? = null
+    private lateinit var appContainer : AppContainer
     private val TAG = "HomeActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        metricsViewModel = ViewModelProvider(this, MetricsViewModelFactory(APIRetrofitClient.metricsApiService))
+        appContainer = (application as MyApplication).appContainer
+        metricsViewModel = ViewModelProvider(this, MetricsViewModelFactory(appContainer.metricsApiHelper))
             .get(MetricsViewModel::class.java)
         newMetricInputDialog = NewMetricInputDialog(this)
         newMetricValueDialog = NewMetricValueInputDialog(this)
@@ -56,7 +59,7 @@ class HomeActivity : AppCompatActivity() {
         metricsRecyclerView = findViewById(R.id.metrics_recycler_view)
         apiErrorMessage = findViewById(R.id.metrics_api_error_txt)
         loadingProgressBar = findViewById(R.id.api_loading_bar)
-        metricsListRecyclerAdapter = MetricsListRecyclerAdapter(averageCalculator, onAddNewMetricValueClick = {
+        metricsListRecyclerAdapter = MetricsListRecyclerAdapter(appContainer.averageCalculator, onAddNewMetricValueClick = {
             metric, position ->
             addNewMetricValue(metric, position)
         })
