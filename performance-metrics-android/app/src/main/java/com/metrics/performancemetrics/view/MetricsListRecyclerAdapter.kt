@@ -27,7 +27,7 @@ class MetricsListRecyclerAdapter(private val averageCalculator: AverageCalculato
         val currentMetric = metricsList[position]
         viewHolder.metricNameTxt.text = currentMetric.name
         val metricValuesAverage =
-            averageCalculator.calculateAverage(currentMetric.metricValues)
+            averageCalculator.calculateAverage(currentMetric.createdAtMillis(), System.currentTimeMillis(), currentMetric.metricValues)
         viewHolder.minuteAvgTxt.setValue(metricValuesAverage.minuteAvg)
         viewHolder.hourAvgTxt.setValue(metricValuesAverage.hourAvg)
         viewHolder.dayAvgTxt.setValue(metricValuesAverage.dayAvg)

@@ -4,11 +4,12 @@ import com.metrics.performancemetrics.data.MetricValue
 import com.metrics.performancemetrics.data.createdAtMillis
 class AverageCalculator {
 
-    fun calculateAverage(metricValues: List<MetricValue>): MetricValuesAverage {
+    fun calculateAverage(startTimeMillis : Long, endTimeMillis : Long, metricValues: List<MetricValue>): MetricValuesAverage {
         var sum = 0.0
-        val startTimeMillis: Long = metricValues.firstOrNull()?.createdAtMillis() ?: return MetricValuesAverage()
-        val endTimeMillis: Long = metricValues.lastOrNull()?.createdAtMillis() ?: return MetricValuesAverage()
 
+        if(metricValues.isEmpty()){
+            return MetricValuesAverage()
+        }
         if(metricValues.size == 1){
             return MetricValuesAverage(metricValues.first().value, metricValues.first().value, metricValues.first().value)
         }
