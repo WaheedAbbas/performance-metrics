@@ -16,7 +16,6 @@ class MetricsViewModel(private val metricsApiHelper : MetricsApiHelper) : ViewMo
 
     private val _metricsState = MutableLiveData<Resource<ArrayList<Metric>>>(Resource.loading(null))
     val metricsState: MutableLiveData<Resource<ArrayList<Metric>>> = _metricsState
-    private val TAG = "MetricsViewModel"
     fun addNewMetric(newMetricBody: NewMetricBody)
     {
         viewModelScope.launch {
@@ -34,12 +33,13 @@ class MetricsViewModel(private val metricsApiHelper : MetricsApiHelper) : ViewMo
             val addNewMetric: APIResponse<MetricValue> = metricsApiHelper.addNewMetricValue(metricId, newMetricValueBody)
             addNewMetric.data?.let {
                 val currentMetricsList : ArrayList<Metric> = _metricsState.value?.data ?: arrayListOf()
-                currentMetricsList.get(metricIndex).metricValues.add(it)
+                currentMetricsList[metricIndex].metricValues.add(it)
                 _metricsState.value = Resource.success(currentMetricsList)
             }
         }
     }
     fun getMetrics() {
+        _metricsState.value = Resource.loading(null)
         viewModelScope.launch {
             val response = metricsApiHelper.getAllMetrics()
             if (response.success) {

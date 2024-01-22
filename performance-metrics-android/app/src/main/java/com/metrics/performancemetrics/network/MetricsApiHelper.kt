@@ -11,9 +11,9 @@ import retrofit2.HttpException
 import java.io.IOException
 import java.lang.reflect.Type
 
-class MetricsApiHelper(private val metricsApiService : MetricsApiService) {
+class MetricsApiHelper(private val metricsApiService: MetricsApiService) {
 
-    suspend fun getAllMetrics() : APIResponse<ArrayList<Metric>> {
+    suspend fun getAllMetrics(): APIResponse<ArrayList<Metric>> {
         return try {
             metricsApiService.getAllMetrics()
         } catch (throwable: Throwable) {
@@ -21,6 +21,7 @@ class MetricsApiHelper(private val metricsApiService : MetricsApiService) {
             handleRequestException(throwable)
         }
     }
+
     suspend fun addNewMetric(newMetricBody: NewMetricBody): APIResponse<Metric> {
         return try {
             metricsApiService.addNewMetric(newMetricBody)
@@ -29,7 +30,11 @@ class MetricsApiHelper(private val metricsApiService : MetricsApiService) {
             handleRequestException(throwable)
         }
     }
-    suspend fun addNewMetricValue(metricId : Int, newMetricValue: NewMetricValueBody): APIResponse<MetricValue> {
+
+    suspend fun addNewMetricValue(
+        metricId: Int,
+        newMetricValue: NewMetricValueBody
+    ): APIResponse<MetricValue> {
         return try {
             metricsApiService.addNewMetricValue(metricId, newMetricValue)
         } catch (throwable: Throwable) {
@@ -81,5 +86,6 @@ class MetricsApiHelper(private val metricsApiService : MetricsApiService) {
             null
         }
     }
-    inline fun <reified T> genericType(): Type = object: TypeToken<T>() {}.type
+
+    inline fun <reified T> genericType(): Type = object : TypeToken<T>() {}.type
 }

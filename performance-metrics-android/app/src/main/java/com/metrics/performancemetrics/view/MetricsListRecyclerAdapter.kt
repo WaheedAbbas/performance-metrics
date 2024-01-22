@@ -10,6 +10,7 @@ import com.metrics.performancemetrics.average.AverageCalculator
 import com.metrics.performancemetrics.R
 import com.metrics.performancemetrics.average.MetricAverageTextView
 import com.metrics.performancemetrics.data.Metric
+import com.metrics.performancemetrics.data.createdAtMillis
 
 typealias OnAddNewMetricValueClick = (metric : Metric, position : Int) -> Unit
 class MetricsListRecyclerAdapter(private val averageCalculator: AverageCalculator,private val onAddNewMetricValueClick : OnAddNewMetricValueClick) : RecyclerView.Adapter<MetricsListRecyclerAdapter.ViewHolder>() {
@@ -23,14 +24,15 @@ class MetricsListRecyclerAdapter(private val averageCalculator: AverageCalculato
         return ViewHolder(view)
     }
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.metricNameTxt.text = metricsList[position].name
+        val currentMetric = metricsList[position]
+        viewHolder.metricNameTxt.text = currentMetric.name
         val metricValuesAverage =
-            averageCalculator.calculateAverage(metricsList[position].metricValues)
+            averageCalculator.calculateAverage(currentMetric.metricValues)
         viewHolder.minuteAvgTxt.setValue(metricValuesAverage.minuteAvg)
         viewHolder.hourAvgTxt.setValue(metricValuesAverage.hourAvg)
         viewHolder.dayAvgTxt.setValue(metricValuesAverage.dayAvg)
         viewHolder.addNewMetricValueBtn.setOnClickListener {
-            onAddNewMetricValueClick(metricsList[position], position)
+            onAddNewMetricValueClick(currentMetric, position)
         }
     }
 

@@ -1,69 +1,173 @@
 package com.metrics.performancemetrics.viewmodel
 
-import androidx.lifecycle.Observer
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.metrics.performancemetrics.data.Metric
+import com.metrics.performancemetrics.data.MetricValue
+import com.metrics.performancemetrics.data.NewMetricBody
+import com.metrics.performancemetrics.data.NewMetricValueBody
 import com.metrics.performancemetrics.network.APIResponse
-import com.metrics.performancemetrics.network.MetricsApiService
+import com.metrics.performancemetrics.network.MetricsApiHelper
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
-import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.MockWebServer
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
+import kotlinx.coroutines.test.setMain
+import org.junit.After
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.time.Instant
+import java.util.*
+import kotlin.test.assertEquals
+
+@ExperimentalCoroutinesApi
 class MetricsViewModelTest {
 
-    @Mock
-    private lateinit var metricsApiService: MetricsApiService
+    @get:Rule
+    val rule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var metricsStateObserver: Observer<Resource<ArrayList<Metric>>>
+    private lateinit var metricsApiHelper: MetricsApiHelper
 
-    private lateinit var metricsViewModel: MetricsViewModel
-    var mockMetrics: ArrayList<Metric> = ArrayList()
-    private lateinit var server: MockWebServer
-    private lateinit var api: MetricsApiService
-    @BeforeEach
-    fun beforeEach() {
-        server = MockWebServer()
-        api = Retrofit.Builder()
-            .baseUrl(server.url("localhost:8080/api/v1"))//Pass any base url like this
-            .addConverterFactory(GsonConverterFactory.create())
-            .build().create(MetricsApiService::class.java)
-        val remoteEmployees = Metric(1, "Remote Employees",  "2024-01-22T06:02:02.652279Z", ArrayList())
-        val onSiteEmployees = Metric(2, "Onsite Employees",  "2024-01-22T06:03:02.652279Z", ArrayList())
-        mockMetrics.add(remoteEmployees)
-        mockMetrics.add(onSiteEmployees)
+    private lateinit var viewModel: MetricsViewModel
+
+    @Before
+    fun setup() {
+        Dispatchers.setMain(UnconfinedTestDispatcher())
+        metricsApiHelper = Mockito.mock(MetricsApiHelper::class.java)
+        viewModel = MetricsViewModel(metricsApiHelper)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun `getAllMetrics success`() = runTest {
-        val successResponse = APIResponse(true, 200, "Success", mockMetrics)
-        val gson: Gson = GsonBuilder().create()
-        val json = gson.toJson(successResponse)!!
-        val res = MockResponse()
-        res.setBody(json)
-        server.enqueue(res)
+    fun `getMetrics success`() = runTest {
+        // Arrange
+        val mockMetricsList = arrayListOf(createDummyMetric())
+        val successResponse = APIResponse(true, 200, "Metrics loaded successfully", mockMetricsList)
+        `when`(metricsApiHelper.getAllMetrics()).thenReturn(successResponse)
 
-        val data = api.getAllMetrics()
-        server.takeRequest()
+        // Act
+        viewModel.getMetrics()
 
-        assertEquals(data, successResponse)
+        // Assert
+        val currentState = viewModel.metricsState.value
+        assert(currentState?.status == Status.SUCCESS)
+        assert(currentState?.data == mockMetricsList)
     }
 
-    @AfterEach
-    fun afterEach() {
-        server.shutdown()
+    @Test
+    fun `getMetrics failure`() = runTest {
+        // Arrange
+        val errorResponse : APIResponse<ArrayList<Metric>> = APIResponse(false, 500, "Internal Server Error", null)
+        `when`(metricsApiHelper.getAllMetrics()).thenReturn(errorResponse)
+
+        // Act
+        viewModel.getMetrics()
+
+        // Assert
+        val currentState = viewModel.metricsState.value
+        assert(currentState?.status == Status.ERROR)
+        assert(currentState?.data == null)
+    }
+
+
+    @Test
+    fun `addNewMetric success`() = runTest {
+        // Arrange
+        val newMetricBody = NewMetricBody("New Metric")
+        val mockMetric = createDummyMetric()
+        val apiResponse = APIResponse(true, 200, "Metric added successfully", mockMetric)
+        `when`(metricsApiHelper.addNewMetric(newMetricBody)).thenReturn(apiResponse)
+
+        // Act
+        viewModel.addNewMetric(newMetricBody)
+
+        // Assert
+        val currentState =  viewModel.metricsState.value
+        assert(currentState?.status == Status.SUCCESS)
+        assert(currentState?.data?.contains(mockMetric) == true)
+    }
+    @Test
+    fun `addNewMetric failure`() = runTest {
+        // Arrange
+        val newMetricBody = NewMetricBody("New Metric")
+        val mockMetric = createDummyMetric()
+        viewModel.metricsState.postValue(Resource.success(data = arrayListOf(createDummyMetric())))
+        val apiResponse : APIResponse<Metric> = APIResponse(false, 400, "Failed to add new metric", null)
+        `when`(metricsApiHelper.addNewMetric(newMetricBody)).thenReturn(apiResponse)
+
+        val initialMetricsList = arrayListOf(createDummyMetric())
+        // Act
+        viewModel.addNewMetric(newMetricBody)
+
+        // Assert
+        val currentState =  viewModel.metricsState.value
+        assert(currentState?.status == Status.SUCCESS)
+        assert(currentState?.data == initialMetricsList)
+    }
+
+    @Test
+    fun `addNewMetricValue success`() = runTest{
+
+        // Arrange
+        val metricId = 1
+        val metricIndex = 0
+        val newMetricValueBody = NewMetricValueBody(123.0)
+        val mockMetricValue = createDummyMetricValue()
+        viewModel.metricsState.postValue(Resource.success(data = arrayListOf(createDummyMetric())))
+
+        val apiResponse = APIResponse(true, 200, "MetricValue added successfully", mockMetricValue)
+        `when`(metricsApiHelper.addNewMetricValue(metricId, newMetricValueBody)).thenReturn(apiResponse)
+
+        // Act
+        viewModel.addNewMetricValue(metricId, metricIndex, newMetricValueBody)
+
+        // Assert
+        val currentState = viewModel.metricsState.value
+        assert(currentState?.status == Status.SUCCESS)
+
+        // Check if the new metric value is added to the correct Metric in the ArrayList
+        val currentMetricsList = currentState?.data
+        val updatedMetric = currentMetricsList?.getOrNull(metricIndex)
+        assert(updatedMetric?.metricValues?.contains(mockMetricValue) == true)
+    }
+    @Test
+    fun `addNewMetricValue failure`() = runTest{
+
+        // Arrange
+        val metricId = 1
+        val metricIndex = 0
+        val newMetricValueBody = NewMetricValueBody(123.0)
+        val mockMetricValue = createDummyMetricValue()
+        viewModel.metricsState.postValue(Resource.success(data = arrayListOf(createDummyMetric())))
+
+        val apiResponse = APIResponse(false, 400, "Failed to add a metric value!", mockMetricValue)
+        `when`(metricsApiHelper.addNewMetricValue(metricId, newMetricValueBody)).thenReturn(apiResponse)
+
+        // Act
+        val initialMetricValues =  viewModel.metricsState.value?.data?.get(metricIndex)?.metricValues
+        viewModel.addNewMetricValue(metricId, metricIndex, newMetricValueBody)
+
+        // Assert
+        val currentState = viewModel.metricsState.value
+        assert(currentState?.status == Status.SUCCESS)
+        assert(viewModel.metricsState.value?.data?.get(metricIndex)?.metricValues == initialMetricValues)
+
+    }
+
+    private fun createDummyMetric(): Metric {
+        return Metric(1, "Dummy Metric", Date().toString(), arrayListOf())
+    }
+
+    private fun createDummyMetricValue(): MetricValue {
+        return MetricValue(1, 42.0, Date().toString(), 1)
     }
 }

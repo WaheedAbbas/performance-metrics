@@ -1,6 +1,7 @@
 package com.metrics.performancemetrics.data
 
 import com.google.gson.annotations.SerializedName
+import com.metrics.performancemetrics.util.DateFormatter
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -12,10 +13,5 @@ data class MetricValue(@SerializedName("id") val id : Int,
                        @SerializedName("metric_id") val metricId : Int)
 fun MetricValue.createdAtMillis() : Long
 {
-   // val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSSX")
-    val parsed = Instant.parse(createdAt)
-  //  val localDateTime = LocalDateTime.parse(createdAt, formatter)
-  //  val instant = localDateTime.atZone(ZoneOffset.UTC).toInstant()
-    // Extract milliseconds from Instant
-    return parsed.toEpochMilli()
+    return DateFormatter.formatStringDateToMillis(createdAt)
 }
