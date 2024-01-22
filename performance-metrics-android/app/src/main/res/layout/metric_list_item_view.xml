@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    app:contentPadding="5dp"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="5dp"
+    app:cardBackgroundColor="@color/cardview_dark_background"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/metric_name_txt"
+        style="@style/TextAppearance.MaterialComponents.Headline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:textColor="@color/white"
+        tools:text="Metric Name"
+        />
+    <LinearLayout
+        android:weightSum="3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.metrics.performancemetrics.average.MetricAverageTextView
+            android:id="@+id/minute_avg_txt"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            app:backgroundColor="@color/pink_200"
+            app:label="min"
+            />
+        <com.metrics.performancemetrics.average.MetricAverageTextView
+            android:id="@+id/hour_avg_txt"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            app:backgroundColor="@color/blue_200"
+            app:label="hrs"
+            />
+        <com.metrics.performancemetrics.average.MetricAverageTextView
+            android:id="@+id/day_avg_txt"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            app:backgroundColor="@color/purple_200"
+            app:label="day"
+            />
+    </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

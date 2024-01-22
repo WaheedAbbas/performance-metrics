@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/values/attrs.xml -->
+<resources>
+    <declare-styleable name="MetricAverageTextView">
+        <attr name="label" format="string"/>
+        <attr name="backgroundColor" format="color" />
+    </declare-styleable>
+</resources>

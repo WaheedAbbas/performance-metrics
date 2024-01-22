@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_swipe_refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       tools:context=".view.HomeActivity">
+      <androidx.recyclerview.widget.RecyclerView
+          android:id = "@+id/metrics_recycler_view"
+          android:padding="10dp"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          android:visibility="gone"
+          tools:visibility="visible"
+          />
+      <TextView
+          android:id="@+id/metrics_api_error_txt"
+          style="@style/TextAppearance.MaterialComponents.Headline4"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="5dp"
+          android:layout_centerInParent="true"
+          android:visibility="gone"
+          tools:visibility="visible"
+          tools:text="Error!"
+          />
+      <ProgressBar
+          android:id="@+id/api_loading_bar"
+          android:layout_centerInParent="true"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:visibility="gone"
+          tools:visibility="visible"
+          />
+   </RelativeLayout>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
