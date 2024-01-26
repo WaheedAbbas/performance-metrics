@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.metrics.performancemetrics.R
+import com.metrics.performancemetrics.util.DefaultNumberFormatter
+import com.metrics.performancemetrics.util.NumberFormatter
+import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
@@ -18,6 +21,8 @@ class MetricAverageTextView  @JvmOverloads constructor(
 
     private var averageTextValue : TextView? = null
     private var averageTextLabel : TextView? = null
+    private var numberFormatter: NumberFormatter = DefaultNumberFormatter()
+
     init {
         val inflate = LayoutInflater.from(context).inflate(R.layout.metric_average_view, this, true)
         averageTextValue = inflate.findViewById(R.id.metric_average_value_txt_view)
@@ -36,9 +41,13 @@ class MetricAverageTextView  @JvmOverloads constructor(
         }
         averageTextLabel?.text = labelText
     }
-    fun setValue(value: Double) {
-        val numberFormat: NumberFormat = NumberFormat.getInstance()
-        averageTextValue?.text =  numberFormat.format(value)
+    //For custom number formatter
+    fun setNumbersFormatter(formatter: NumberFormatter)
+    {
+        this.numberFormatter = formatter
+    }
+    fun setValue(value: BigDecimal) {
+        averageTextValue?.text =  numberFormatter.formatNumber(value)
     }
     private fun applyRoundedBackground(bgColor : Int) {
         val shape = GradientDrawable()

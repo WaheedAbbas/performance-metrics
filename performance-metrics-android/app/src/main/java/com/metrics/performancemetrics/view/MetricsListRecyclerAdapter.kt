@@ -11,6 +11,7 @@ import com.metrics.performancemetrics.R
 import com.metrics.performancemetrics.average.MetricAverageTextView
 import com.metrics.performancemetrics.data.Metric
 import com.metrics.performancemetrics.data.createdAtMillis
+import java.math.BigDecimal
 
 typealias OnAddNewMetricValueClick = (metric : Metric, position : Int) -> Unit
 class MetricsListRecyclerAdapter(private val averageCalculator: AverageCalculator,private val onAddNewMetricValueClick : OnAddNewMetricValueClick) : RecyclerView.Adapter<MetricsListRecyclerAdapter.ViewHolder>() {
@@ -28,9 +29,9 @@ class MetricsListRecyclerAdapter(private val averageCalculator: AverageCalculato
         viewHolder.metricNameTxt.text = currentMetric.name
         val metricValuesAverage =
             averageCalculator.calculateAverage(currentMetric.createdAtMillis(), System.currentTimeMillis(), currentMetric.metricValues)
-        viewHolder.minuteAvgTxt.setValue(metricValuesAverage.minuteAvg)
-        viewHolder.hourAvgTxt.setValue(metricValuesAverage.hourAvg)
-        viewHolder.dayAvgTxt.setValue(metricValuesAverage.dayAvg)
+        viewHolder.minuteAvgTxt.setValue(BigDecimal(metricValuesAverage.minuteAvg))
+        viewHolder.hourAvgTxt.setValue(BigDecimal(metricValuesAverage.hourAvg))
+        viewHolder.dayAvgTxt.setValue(BigDecimal(metricValuesAverage.dayAvg))
         viewHolder.addNewMetricValueBtn.setOnClickListener {
             onAddNewMetricValueClick(currentMetric, position)
         }

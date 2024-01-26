@@ -19,7 +19,7 @@
         android:maxLines="1"
         android:gravity="center"
         tools:background="@color/pink_200"
-        app:autoSizeMaxTextSize="18sp"
+        app:autoSizeMaxTextSize="16sp"
         app:autoSizeMinTextSize="10sp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
