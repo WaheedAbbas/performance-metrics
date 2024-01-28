@@ -5,9 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="5dp"
     app:contentPadding="5dp"
-    app:cardElevation="2dp"
+    app:cardElevation="4dp"
     app:cardCornerRadius="5dp"
-    app:cardBackgroundColor="@color/cardview_dark_background"
+    app:cardBackgroundColor="?attr/systemCardBackground"
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:textColor="@color/white"
+        android:textColor="?attr/labelColor"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/add_new_metric_value_btn"
@@ -29,9 +29,11 @@
             android:id="@+id/add_new_metric_value_btn"
             android:layout_alignParentEnd="true"
             android:background="@null"
-            android:src="@android:drawable/ic_menu_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:src="@drawable/ic_add"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:layout_width="24dp"
+            android:layout_height="24dp"/>
     <LinearLayout
         android:layout_below="@+id/metric_name_txt"
         android:weightSum="3"

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextInputLabelsStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColorHint">?attr/hintTextColor</item>
+    </style>
+</resources>

@@ -5,6 +5,12 @@
         <item name="colorPrimary">@color/teal_200</item>
         <item name="colorPrimaryVariant">@color/teal_200</item>
         <item name="colorOnPrimary">@color/black</item>
+        <item name="systemBackground">@color/dark_background</item>
+        <item name="systemCardBackground">@color/dark_card_background</item>
+        <item name="labelColor">@color/dark_label</item>
+        <item name="hintTextColor">@color/extra_dark_gray_color</item>
+        <item name="popupBackgroundColor">@color/popup_dark_background_color</item>
+        <item name="secondaryLabelsColor">@color/secondary_dark_label</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>

@@ -8,12 +8,13 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import com.google.android.material.textfield.TextInputLayout
 import com.metrics.performancemetrics.R
 
 typealias OnAddNewMetricValue = (Double) -> Unit
 class NewMetricValueInputDialog (private val activity: Activity) {
 
-    private var metricValueEdtTxt  : EditText? = null
+    private var metricValueEdtTxt  : TextInputLayout? = null
     private var addNewMetricValueBtn  : Button? = null
     private var metricNameTxt  : TextView? = null
     fun showDialog(metricName : String, onAddNewMetricValue : OnAddNewMetricValue)
@@ -23,7 +24,7 @@ class NewMetricValueInputDialog (private val activity: Activity) {
         metricValueEdtTxt = dialogLayout.findViewById(R.id.new_metric_value_edt)
         metricNameTxt = dialogLayout.findViewById(R.id.metric_name_txt)
         addNewMetricValueBtn = dialogLayout.findViewById(R.id.add_new_metric_value_btn)
-        metricValueEdtTxt?.addTextChangedListener(metricValueTxtWatcher)
+        metricValueEdtTxt?.editText?.addTextChangedListener(metricValueTxtWatcher)
         metricNameTxt?.text = metricName
 
         val builder: AlertDialog = AlertDialog.Builder(activity).create()
@@ -31,7 +32,7 @@ class NewMetricValueInputDialog (private val activity: Activity) {
         builder.window?.setBackgroundDrawableResource(android.R.color.transparent)
         builder.show()
         addNewMetricValueBtn?.setOnClickListener {
-            onAddNewMetricValue(metricValueEdtTxt?.text.toString().toDoubleOrNull() ?: 0.0)
+            onAddNewMetricValue(metricValueEdtTxt?.editText?.text.toString().toDoubleOrNull() ?: 0.0)
             builder.dismiss()
         }
 

@@ -5,4 +5,12 @@
         <attr name="label" format="string"/>
         <attr name="backgroundColor" format="color" />
     </declare-styleable>
+    <declare-styleable name="SystemThemeAttr">
+        <attr name="systemBackground" format="color" />
+        <attr name="systemCardBackground" format="color" />
+        <attr name="labelColor" format="color" />
+        <attr name="secondaryLabelsColor" format="color" />
+        <attr name="hintTextColor" format="color"/>
+        <attr name="popupBackgroundColor" format="color"/>
+    </declare-styleable>
 </resources>

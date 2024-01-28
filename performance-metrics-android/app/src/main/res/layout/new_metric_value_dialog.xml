@@ -10,46 +10,59 @@
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/metric_name_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        tools:text="Metric Name"
+        android:text="Add Metric Value"
         android:fontFamily="sans-serif-light"
-        android:textColor="@android:color/white"
+        android:textColor="?attr/labelColor"
         android:textSize="25sp"/>
-    <LinearLayout
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="40dp">
 
+    <TextView
+        android:id="@+id/metric_name_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:fontFamily="sans-serif"
+        android:textColor="?attr/labelColor"
+        android:textSize="20sp"
+        android:layout_gravity="start"
+        android:layout_marginTop="8dp"
+        tools:text="Metric Name"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter a value: "
+        android:gravity="center"
+        android:text="Enter a new value for the metric"
+        android:layout_gravity="start"
         android:fontFamily="sans-serif-light"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        />
+        android:textColor="?attr/secondaryLabelsColor"
+        android:textSize="16sp"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/new_metric_value_edt"
+            style = "@style/TextInputLabelsStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="?attr/labelStyle"
+            app:errorEnabled="true"
+            app:boxCornerRadiusTopStart="25dp"
+            app:boxCornerRadiusTopEnd="25dp"
+            app:boxCornerRadiusBottomStart="25dp"
+            app:boxCornerRadiusBottomEnd="25dp"
+            app:hintTextColor="?attr/colorPrimary"
+            app:boxStrokeColor = "?attr/colorPrimary">
 
-    <EditText
-        android:id="@+id/new_metric_value_edt"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="5dp"
-        android:textAlignment="textStart"
-        android:hint="e.g 12.3"
-        android:fontFamily="sans-serif-light"
-        android:inputType="number"
-        android:maxLines="1"
-        android:textColorHint="#9B9B9B"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:background="@null"
-        />
-    </LinearLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:hint="e.g 12.3"
+                android:textColor="?attr/labelColor"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/add_new_metric_value_btn"
@@ -59,7 +72,7 @@
         android:text="@string/add"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        android:enabled="true"
+        android:enabled="false"
         android:alpha="0.6"
         app:backgroundTint="@color/teal_200"
         app:cornerRadius="5dp" />

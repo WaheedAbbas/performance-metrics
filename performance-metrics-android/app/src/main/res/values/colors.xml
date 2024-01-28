@@ -9,4 +9,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="dark_background">#202020</color>
+    <color name="light_background">#FAFAFA</color>
+    <color name="light_card_background">#FFFFFF</color>
+    <color name="dark_card_background">#FF424242</color>
+    <color name="light_label">#FF424242</color>
+    <color name="dark_label">#FFFFFF</color>
+    <color name="secondary_light_label">#666666</color>
+    <color name="secondary_dark_label">#bdc3c7</color>
+    <color name="extra_dark_gray_color">#363636</color>
+    <color name="dark_gray_color">#aaa</color>
+    <color name="popup_dark_background_color">#262626</color>
+    <color name="popup_light_background_color">#F4F4F4</color>
 </resources>
