@@ -40,8 +40,7 @@
         app:boxCornerRadiusTopEnd="25dp"
         app:boxCornerRadiusBottomStart="25dp"
         app:boxCornerRadiusBottomEnd="25dp"
-        app:hintTextColor="?attr/colorPrimary"
-        app:boxStrokeColor = "?attr/colorPrimary">
+       >
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"

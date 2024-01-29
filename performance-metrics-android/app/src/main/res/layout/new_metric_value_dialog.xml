@@ -16,7 +16,7 @@
         android:text="Add Metric Value"
         android:fontFamily="sans-serif-light"
         android:textColor="?attr/labelColor"
-        android:textSize="25sp"/>
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/metric_name_txt"
@@ -25,7 +25,7 @@
         android:gravity="center"
         android:fontFamily="sans-serif"
         android:textColor="?attr/labelColor"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:layout_gravity="start"
         android:layout_marginTop="8dp"
         tools:text="Metric Name"
@@ -50,9 +50,7 @@
             app:boxCornerRadiusTopStart="25dp"
             app:boxCornerRadiusTopEnd="25dp"
             app:boxCornerRadiusBottomStart="25dp"
-            app:boxCornerRadiusBottomEnd="25dp"
-            app:hintTextColor="?attr/colorPrimary"
-            app:boxStrokeColor = "?attr/colorPrimary">
+            app:boxCornerRadiusBottomEnd="25dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"

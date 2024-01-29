@@ -1,65 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/home_swipe_refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/systemBackground">
+    android:fitsSystemWindows="true"
+    tools:context=".view.HomeActivity">
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       tools:context=".view.HomeActivity">
-      <RelativeLayout
-          android:id="@+id/metrics_relative_layout"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent">
-         <androidx.recyclerview.widget.RecyclerView
-          android:id = "@+id/metrics_recycler_view"
-          android:padding="10dp"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-          android:visibility="gone"
-          tools:visibility="visible"
-          />
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-         <com.google.android.material.floatingactionbutton.FloatingActionButton
-             android:id="@+id/add_new_metric_fab"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignParentEnd="true"
-             android:layout_alignParentBottom="true"
-             android:layout_marginStart="10dp"
-             android:layout_marginTop="10dp"
-             android:layout_marginEnd="10dp"
-             android:layout_marginBottom="10dp"
-             app:tint="?attr/systemBackground"
-             android:src="@android:drawable/ic_input_add" />
-      </RelativeLayout>
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            app:expandedTitleGravity="center"
+            app:expandedTitleTextAppearance="@style/expandedMetricsToolbarTitle"
+            app:collapsedTitleTextAppearance="@style/collapsedMetricsToolbarTitle"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlwaysCollapsed">
 
-      <TextView
-          android:id="@+id/metrics_api_error_txt"
-          style="@style/TextAppearance.MaterialComponents.Body1"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_margin="5dp"
-          android:layout_centerInParent="true"
-          android:textColor="?attr/labelColor"
-          android:visibility="gone"
-          tools:visibility="visible"
-          tools:text="Error!"
-          />
-      <ProgressBar
-          android:id="@+id/api_loading_bar"
-          android:layout_centerInParent="true"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:visibility="gone"
-          tools:visibility="visible"
-          />
-   </RelativeLayout>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                app:title="@string/app_name"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:titleTextColor="?attr/labelColor"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_collapseMode="pin"/>
+            <ImageView
+                android:id="@+id/add_new_metric_btn"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="10dp"
+                android:layout_gravity="end|bottom"
+                android:src="@drawable/ic_add"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                app:tint="?attr/labelColor" />
 
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/home_swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/systemBackground"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".view.HomeActivity">
+                <RelativeLayout
+                    android:id="@+id/metrics_relative_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id = "@+id/metrics_recycler_view"
+                        android:padding="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:nestedScrollingEnabled="false"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:clipToPadding="false"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/metrics_api_error_txt"
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_centerInParent="true"
+                    android:textColor="?attr/labelColor"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    tools:text="Error!"
+                    />
+                <ProgressBar
+                    android:id="@+id/api_loading_bar"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    />
+            </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

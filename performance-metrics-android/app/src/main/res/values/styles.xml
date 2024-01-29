@@ -3,5 +3,18 @@
     <style name="TextInputLabelsStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:textSize">20sp</item>
         <item name="android:textColorHint">?attr/hintTextColor</item>
+        <item name="boxStrokeColor">@color/text_input_box_stroke</item>
     </style>
+
+    <style name="collapsedMetricsToolbarTitle" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">?attr/labelColor</item>
+    </style>
+
+    <style name="expandedMetricsToolbarTitle" parent="@style/TextAppearance.Design.CollapsingToolbar.Expanded">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">?attr/labelColor</item>
+
+    </style>
+
 </resources>

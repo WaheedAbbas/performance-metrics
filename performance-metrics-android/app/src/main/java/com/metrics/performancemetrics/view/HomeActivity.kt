@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -27,7 +28,7 @@ class HomeActivity : AppCompatActivity() {
 
     private var metricsViewModel: MetricsViewModel? = null
     private var homeSwipeRefreshLayout : SwipeRefreshLayout? = null
-    private var addNewMetricFAB : FloatingActionButton? = null
+    private var addNewMetricBtn : ImageView? = null
     private var metricsListRecyclerAdapter : MetricsListRecyclerAdapter? = null
     private var metricsRecyclerView : RecyclerView? = null
     private var apiErrorMessage : TextView? = null
@@ -55,7 +56,7 @@ class HomeActivity : AppCompatActivity() {
     private fun initViews()
     {
         homeSwipeRefreshLayout = findViewById(R.id.home_swipe_refresh_layout)
-        addNewMetricFAB = findViewById(R.id.add_new_metric_fab)
+        addNewMetricBtn = findViewById(R.id.add_new_metric_btn)
         metricsRecyclerView = findViewById(R.id.metrics_recycler_view)
         apiErrorMessage = findViewById(R.id.metrics_api_error_txt)
         loadingProgressBar = findViewById(R.id.api_loading_bar)
@@ -70,7 +71,7 @@ class HomeActivity : AppCompatActivity() {
             this@HomeActivity.metricsViewModel?.getMetrics()
             homeSwipeRefreshLayout?.isRefreshing = false
         })
-        addNewMetricFAB?.setOnClickListener {
+        addNewMetricBtn?.setOnClickListener {
             newMetricInputDialog?.showDialog(onAddNewMetric = {
                 //Add new metric
                 addNewMetric(it)
